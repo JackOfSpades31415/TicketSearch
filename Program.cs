@@ -27,6 +27,8 @@ if (prompt == "1"){
 
 
 else if (prompt == "2"){
+  
+    StreamWriter sw = new StreamWriter("Ticket.csv", true);
     string type = "";
     Console.WriteLine("What type of ticket will this be?");
     Console.WriteLine("[1] for Bugs or Defects.");
@@ -37,6 +39,7 @@ else if (prompt == "2"){
     if(type == "1"){
     BugDefect bugdef = new BugDefect();
     bugdef.type = 1;
+    bugdef.ticketID = ticketFile.Tickets.Max(t => t.ticketID) + 1;
     Console.WriteLine("Summary?");
     bugdef.summary = Console.ReadLine();
     Console.WriteLine("Current Status?");
@@ -51,12 +54,14 @@ else if (prompt == "2"){
     bugdef.watching = Console.ReadLine();
     Console.WriteLine("What is the severity?");
     bugdef.severity = Console.ReadLine();
-
-    ticketFile.AddBug(bugdef);
+    sw.WriteLine($"{bugdef.type},{bugdef.ticketID},{bugdef.summary},{bugdef.status},{bugdef.submitter},{bugdef.assigned},{bugdef.watching},{bugdef.severity}");
+    sw.Close();
+    logger.Info("Ticket #{Id} added", bugdef.ticketID);
     }
     else if(type == "2"){
       Enhancement enhance = new Enhancement();
       enhance.type = 2;
+      enhance.ticketID = ticketFile.Tickets.Max(t => t.ticketID) + 1;
     Console.WriteLine("Summary?");
     enhance.summary = Console.ReadLine();
     Console.WriteLine("Current Status?");
@@ -77,11 +82,14 @@ else if (prompt == "2"){
     enhance.reason = Console.ReadLine();
     Console.WriteLine("What is the estimate?");
     enhance.estimate = Console.ReadLine();
-    ticketFile.AddEnhance(enhance);
+    sw.WriteLine($"{enhance.type},{enhance.ticketID},{enhance.summary},{enhance.status},{enhance.submitter},{enhance.assigned},{enhance.watching},{enhance.software},{enhance.cost},{enhance.reason},{enhance.estimate}");
+            sw.Close();
+            logger.Info("Ticket #{Id} added", enhance.ticketID);
     }
     else if(type == "3"){
       Task task = new Task();
       task.type = 3;
+      task.ticketID = ticketFile.Tickets.Max(t => t.ticketID) + 1;
     Console.WriteLine("Summary?");
     task.summary = Console.ReadLine();
     Console.WriteLine("Current Status?");
@@ -98,7 +106,9 @@ else if (prompt == "2"){
     task.projectName = Console.ReadLine();
     Console.WriteLine("When must it be completed by?");
     task.dueDate = Console.ReadLine();
-    ticketFile.AddTask(task);
+    sw.WriteLine($"{task.type},{task.ticketID},{task.summary},{task.status},{task.submitter},{task.assigned},{task.watching}");
+            sw.Close();
+            logger.Info("Ticket #{Id} added", task.ticketID);
     }
     else{
       Console.WriteLine("That is not a valid response.");

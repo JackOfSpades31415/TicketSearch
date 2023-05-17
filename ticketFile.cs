@@ -7,14 +7,11 @@ public class ticketFile {
 
     public ticketFile(string ticketFilePath){
         filePath = ticketFilePath;
-
-
         Tickets = new List<Ticket>();
         try{
         StreamReader sr = new StreamReader(filePath);
             while (!sr.EndOfStream)
             {
-                
                 string line = sr.ReadLine();
                 string[] ticketInfo = line.Split(',');
                 if(ticketInfo[0] == "1"){
