@@ -105,31 +105,47 @@ else if (prompt == "2"){
     }
 }
  else if(prompt == "3"){
-    string ticketType = "";
     string searchType = "";
-    Console.WriteLine("What type of ticket are we searching?");
-    Console.WriteLine("[1] for Bugs or Defects.");
-    Console.WriteLine("[2] for Enhancements");
-    Console.WriteLine("[3] for Tasks");
-    ticketType = Console.ReadLine();
-    if(ticketType == "1" || ticketType == "2" || ticketType == "3"){
       
       Console.WriteLine("What are we searching by?");
       Console.WriteLine("[1] for status");
       Console.WriteLine("[2] for priority");
       Console.WriteLine("[3] for submitted");
       searchType = Console.ReadLine();
+  
+   
+    if(searchType == "1" || searchType == "2" || searchType == "3"){
+      Console.WriteLine("Input keywords you'd like to search by:");
+      String searchInput = Console.ReadLine();
+        if(searchType == "1"){
+          var Tickets = ticketFile.Tickets.Where(t => t.status.Contains(searchInput));
+          int num = ticketFile.Tickets.Where(t => t.status.Contains(searchInput)).Count();
+          Console.WriteLine($"There are {Tickets.Count()} tickets that fit that search query.");
+          foreach(Ticket t in Tickets){
+            Console.WriteLine($"  {t.ticketID}  {t.summary}");
+            }
+    
+      }
+      else if(searchType == "2"){
+          var Tickets = ticketFile.Tickets.Where(t => t.priority.Contains(searchInput));
+          int num = ticketFile.Tickets.Where(t => t.priority.Contains(searchInput)).Count();
+          Console.WriteLine($"There are {Tickets.Count()} tickets that fit that search query.");
+          foreach(Ticket t in Tickets){
+            Console.WriteLine($"  {t.ticketID}  {t.summary}");
+            }
+      }
+      else if(searchType == "3"){
+          var Tickets = ticketFile.Tickets.Where(t => t.submitter.Contains(searchInput));
+          int num = ticketFile.Tickets.Where(t => t.submitter.Contains(searchInput)).Count();
+          Console.WriteLine($"There are {Tickets.Count()} tickets that fit that search query.");
+          foreach(Ticket t in Tickets){
+            Console.WriteLine($"  {t.ticketID}  {t.summary}");
+            }
+      }
+      
     }
-   else{
+    else{
       Console.WriteLine("That is not a valid response.");
-    }
-    if((ticketType == "1" || ticketType == "2" || ticketType == "3") && (searchType == "1" || searchType == "2" || searchType == "3")){
-      
-      Console.WriteLine("What are we searching by?");
-      Console.WriteLine("[1] for status");
-      Console.WriteLine("[2] for priority");
-      Console.WriteLine("[3] for submitted");
-      searchType = Console.ReadLine();
     }
 
 
